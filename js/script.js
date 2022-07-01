@@ -15,7 +15,7 @@ Quando l'utente clicca su una cella, incrementiamo il punteggio.
 Se riusciamo, facciamo anche in modo da non poter più cliccare la stessa cella.
 
 
-# MILESTONE 2
+////# MILESTONE 2
 Facciamo in modo di generare 16 numeri casuali (tutti diversi) compresi tra 1 e il massimo di caselle disponibili.
 Generiamoli e stampiamo in console per essere certi che siano corretti
 
@@ -23,10 +23,25 @@ Generiamoli e stampiamo in console per essere certi che siano corretti
 # MILESTONE 3
 Quando l'utente clicca su una cella, verifichiamo se ha calpestato una bomba, controllando se il numero di cella è presente nell'array di bombe. Se si, la cella diventa rossa (raccogliamo il punteggio e e scriviamo in console che la partita termina) altrimenti diventa azzurra e dobbiamo incrementare il punteggio.
 
+//// 1- seleziono una cella,
+//// 2- prendo dalla cella il numero
+//// 3- il numero di cella e' presente nell'array?
+//// 3.a- se e' presente coloro la cella di rosso
+//// 3.a2- richiamare la memoria del punteggio
+//// 3.a3- stampo in console "partita terminata"   
+//// 3.b- se non e' presente coloro di azzurro
+//// 3.b2- incremento il punteggio
 
 # MILESTONE 4
 Quando l'utente clicca su una cella, e questa non è una bomba, dobbiamo controllare se il punteggio incrementato ha raggiunto il punteggio massimo perchè in quel caso la partita termina. Raccogliamo quindi il messaggio è scriviamo un messaggio appropriato.
 (Ma come stabiliamo quale sia il punteggio massimo?)
+
+//// 1- seleziono la cella
+//// 2.a- se non e' una bomba
+//// 2.b- e il punteggio ha raggiunto il massimo?
+//// 2.c- allora la partita e' terminata
+//// 2.d- tramite un alert dico all'utente che ha vinto
+//// 3- il punteggio massimo sara' il numero di celle - il numero totale delle bombe
 
 
 # MILESTONE 5
@@ -43,7 +58,6 @@ const grid = document.getElementById('grid');
 const button = document.getElementById('button');
 const score = document.getElementById('score-point');
 
-//IMPOSTAZIONI INIZIALI X DETERMINARE IL NUMERO DI RIGHE E COLONNE
 
 let userResult = 0;
 
@@ -55,25 +69,56 @@ function createCell() {
     const cella = document.createElement('div');
     cella.className = 'cell';
     cella.addEventListener('click', () => {
-        cella.classList.add('azure' , 'none')       
-        for (let i = 1; i <= 1; i++) {
-            userResult += 1;
-            score.innerHTML = `${userResult}`;
+        cella.classList.add('ygreen', 'no-event')
+        userResult += 1;
+        score.innerHTML = `${userResult}`;
+        console.log(cella.innerHTML)
+        const cellNumber = parseInt(cella.innerHTML);
+        console.log(userResult)
+        console.log((totalCells - arrayNumber.length - 1))
+        if (arrayNumber.includes(cellNumber)) {
+            cella.style.backgroundColor = 'red'
+            console.log(userResult)
+            console.log('PARTITA TERMINATA')
+        } else if (userResult == (totalCells - arrayNumber.length)) {
+            alert('HAI VINTO');
+            alert(`Il punteggio e' ` + (totalCells - arrayNumber.length))
         }
+
     })
-    console.log(cella.innerHTML)
 
     return cella;
 };
+// lista di numeri estratti
+let arrayNumber = [];
 
-function randomGenerator() {
+
+//
+
+
+function randomGenerator(max) {
     for (let i = 0; i < 16; i++) {
-        randomNumbers = Math.floor(Math.random() * 100) + 1;
-        console.log(randomNumbers)
+        //genere numero random
+        let randomNumber = Math.floor(Math.random() * max + 1);
 
+        //controllo se gia esiste nell array
+        if (arrayNumber.includes(randomNumber)) {
+            // se esiste non lo aggiunge
+            do {
+                randomNumber = Math.floor(Math.random() * max + 1);
+            } while (arrayNumber.includes(randomNumber));
+            arrayNumber.push(randomNumber)
+        } else {
+            // se non esiste lo aggiungo
+            arrayNumber.push(randomNumber)
+        }
     }
+
 }
-randomGenerator(1, 100);
+
+randomGenerator(totalCells);
+console.log(arrayNumber)
+
 
 
 

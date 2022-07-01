@@ -2,6 +2,9 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: 'League Gothic', sans-serif;
+    font-family: 'Rubik Moonrocks', cursive;
+    font-family: 'Stick No Bills', sans-serif;
 }
 
 #grid {
@@ -11,7 +14,7 @@
     display: flex;
     flex-wrap: wrap;
     margin: 0 auto;
-
+    box-shadow: 15px 8px 3px 3px lightgrey;
 }
 
 #grid .cell {
@@ -24,23 +27,28 @@
     height: 10%;
 }
 
-.none {
+.no-event {
     pointer-events: none;
 }
 
-.azure {
-    background-color: rgb(55, 233, 233);
+.ygreen {
+    background-color: yellowgreen;
 }
 
 .select {
     height: 50px;
-    width: 100px;
+    width: 150px;
     box-shadow: 15px 8px 3px 3px lightgrey;
+    font-size: 2rem;
 }
 
 .container {
     display: flex;
     align-items: center;
+}
+
+.p-score{
+    font-size: 1.5rem;
 }
 
 #button {
@@ -53,8 +61,10 @@
 }
 
 .score {
-    height: 100px;
-    width: 150px;
-    border: 1px solid black;
-    margin-left: 20px;
+    height: 150px;
+    width: 180px;
+    border: 1px solid orangered;
+    margin-left: 30px;
+    font-size: 3rem;
+    box-shadow: 15px 8px 3px 3px lightgrey;
 }
