@@ -32,7 +32,7 @@ Quando l'utente clicca su una cella, verifichiamo se ha calpestato una bomba, co
 //// 3.b- se non e' presente coloro di azzurro
 //// 3.b2- incremento il punteggio
 
-# MILESTONE 4
+////# MILESTONE 4
 Quando l'utente clicca su una cella, e questa non è una bomba, dobbiamo controllare se il punteggio incrementato ha raggiunto il punteggio massimo perchè in quel caso la partita termina. Raccogliamo quindi il messaggio è scriviamo un messaggio appropriato.
 (Ma come stabiliamo quale sia il punteggio massimo?)
 
@@ -42,6 +42,7 @@ Quando l'utente clicca su una cella, e questa non è una bomba, dobbiamo control
 //// 2.c- allora la partita e' terminata
 //// 2.d- tramite un alert dico all'utente che ha vinto
 //// 3- il punteggio massimo sara' il numero di celle - il numero totale delle bombe
+
 
 
 # MILESTONE 5
@@ -57,32 +58,39 @@ Quando la partita termina dobbiamo capire se è terminata perchè è stata clicc
 const grid = document.getElementById('grid');
 const button = document.getElementById('button');
 const score = document.getElementById('score-point');
-
+const scoreResult = document.getElementById('user-score');
 
 let userResult = 0;
-
 const rows = 10;
 const cells = 10;
 const totalCells = rows * cells;
 //FUNZIONE CREAZIONE CELLA
 function createCell() {
+    const bombImg = document.createElement('img');
+    bombImg.src = '/img/bomb.png';
+    bombImg.style.width = (100) + '%';
+    bombImg.style.height = (100) + '%';
     const cella = document.createElement('div');
     cella.className = 'cell';
     cella.addEventListener('click', () => {
-        cella.classList.add('ygreen', 'no-event')
+        cella.classList.add('azure', 'no-event')
         userResult += 1;
         score.innerHTML = `${userResult}`;
-        console.log(cella.innerHTML)
-        const cellNumber = parseInt(cella.innerHTML);
-        console.log(userResult)
-        console.log((totalCells - arrayNumber.length - 1))
+        console.log(cella.innerHTML);
+        let cellNumber = parseInt(cella.innerHTML);
+        console.log(userResult);
+        console.log((totalCells - arrayNumber.length - 1));
         if (arrayNumber.includes(cellNumber)) {
-            cella.style.backgroundColor = 'red'
-            console.log(userResult)
-            console.log('PARTITA TERMINATA')
+            cella.innerHTML = '';
+            cella.style.backgroundColor = 'red';
+            cella.append(bombImg);
+            console.log(userResult);
+            console.log('PARTITA TERMINATA');
+            alert('Partita terminata, premi play per giocare di nuovo');
+            scoreResult.innerHTML = `Mi spiace, hai perso, RIPROVA!`;
         } else if (userResult == (totalCells - arrayNumber.length)) {
-            alert('HAI VINTO');
-            alert(`Il punteggio e' ` + (totalCells - arrayNumber.length))
+            alert('HAI VINTO ' + `Il punteggio e' ` + (totalCells - arrayNumber.length));
+            scoreResult.innerHTML = `Congratulazioni hai vinto, non credevo fosse possibile!`;
         }
 
     })
@@ -107,17 +115,16 @@ function randomGenerator(max) {
             do {
                 randomNumber = Math.floor(Math.random() * max + 1);
             } while (arrayNumber.includes(randomNumber));
-            arrayNumber.push(randomNumber)
+            arrayNumber.push(randomNumber);
         } else {
             // se non esiste lo aggiungo
-            arrayNumber.push(randomNumber)
+            arrayNumber.push(randomNumber);
         }
     }
 
 }
 
-randomGenerator(totalCells);
-console.log(arrayNumber)
+randomGenerator(100);
 
 
 
@@ -132,15 +139,17 @@ console.log(arrayNumber)
 // MOSTRO IN PAGINA LA GRIGLIA TRAMITE UN EVENT LISTNER AL BUTTON
 button.addEventListener('click', () => {
     grid.innerHTML = "";
+    score.innerHTML = 0;
     // CICLO FOR
     for (let i = 1; i <= totalCells; i++) {
         const cell = createCell();
         grid.appendChild(cell);
         //STAMPO PER OGNI DIV CREATO IL NUMERO A CUI EGLI APPARTIENE NELLA GRIGLA
         cell.innerHTML = i;
-        button.innerHTML = 'Play again'
+        button.innerHTML = 'Play again';
         console.log(cell);
     }
+
 })
 
 
