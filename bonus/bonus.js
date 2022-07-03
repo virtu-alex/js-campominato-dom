@@ -9,6 +9,7 @@ Aggiungere una select accanto al bottone di generazione, che fornisca una scelta
 //GET ELEMENTS FROM DOM
 const score = document.getElementById('score-point');
 const scoreResult = document.getElementById('user-score');
+const dropdown = document.getElementById('dropdown');
 
 //SUPPORT VARIABLES
 let userResult = 0;
@@ -16,7 +17,6 @@ let totalCells;
 
 // BLACKLIST ARRAY
 let arrayNumber = [];
-
 
 function randomGenerator(max) {
     for (let i = 0; i < 16; i++) {
@@ -35,10 +35,12 @@ function randomGenerator(max) {
             arrayNumber.push(randomNumber);
         }
     }
-
 }
+console.log(arrayNumber)
+
 //INVOCATION (MAX = 100);
-randomGenerator(100);
+randomGenerator(100); //if you wanna cheat just change 100 with 16 (so, from the number 1 to 16 in the grid will be all bombs)
+
 //FUNCTION CREATE CELL
 function createCell(columnsNumber, rowsNumber) {
     //CREATE DIV ELEMENT
@@ -58,7 +60,7 @@ function createCell(columnsNumber, rowsNumber) {
     //ADD CLASS FROM (STYLE.CSS) FILE
     cella.className = 'cell';
     //CELLS LISTENS TO CLICKS
-    cella.addEventListener('click', () => {
+    cella.addEventListener('click', (event) => {
         //ADD CLASS FROM CSS (BACKGROUND IF NO BOMB / NO REPEATABLE CLICKS)
         cella.classList.add('azure', 'no-event')
         //STAMP USER SCORE
@@ -72,18 +74,22 @@ function createCell(columnsNumber, rowsNumber) {
         console.log((totalCells - arrayNumber.length - 1));
         // IF THE USER HITS A "BOMB"...
         if (arrayNumber.includes(cellNumber)) {
+            //CLEAR CELL SLOT
             cella.innerHTML = '';
+            //ADD STYLE
             cella.style.backgroundColor = 'red';
+            //IMPROVED ADDED STYLE WITH IMAGE
             cella.append(bombImg);
             console.log(userResult);
             console.log('GAME OVER');
             alert('GAME OVER, PRESS THE PLAY AGAIN BUTTON!');
+            //MESSAGE FOR USER
             scoreResult.innerHTML = `I'M SORRY BUDDY! YOU LOST, TRY AGAIN`;
             //ELSE IF USER SCORE IS EQUAL TO THE CELLS LESS THE BOMBS...
         } else if (userResult == (totalCells - arrayNumber.length)) {
             //ALERT YOU WON MESSAGE
             alert('YOU WON ' + `THE SCORE ACHIEVED IS' ` + (totalCells - arrayNumber.length));
-            //STAMP IN PAGE YOU WON MESSAGE
+            //MESSAGE YOU WON (ACTUALLY INCREDIBLE IF YOU REALLY DID IT WITHOUT CHEATING, YOU'R A BOSS!)
             scoreResult.innerHTML = `CONGRATULATIONS YOU WON, DIDNT KNEW IT WAS POSSIBLE!`;
         }
     })
@@ -107,13 +113,13 @@ function gridGenerator(rows, cells) {
         //CLEAR RESULT MESSAGE
         scoreResult.innerHTML = '';
 
-
         // FOR CYCLE
         for (let i = 1; i <= totalCells; i++) {
             const cell = createCell(cells, rows);
             grid.appendChild(cell);
-            //STAMPO PER OGNI DIV CREATO IL NUMERO A CUI EGLI APPARTIENE NELLA GRIGLA
+            //STAMP FOR EVERY CELL THE APPURTENANCES INDEX
             cell.innerHTML = i;
+            //CHANGE BUTTON TEXT
             button.innerHTML = 'Play again'
             console.log(cell);
         }
@@ -121,22 +127,27 @@ function gridGenerator(rows, cells) {
 }
 
 
-const dropdown = document.getElementById('dropdown')
 
-
+//ON OPTIONS CHANGE FROM DIFFICULT SELECT, SHOWS A DIFFERENT GRID
 dropdown.addEventListener('change', () => {
+    //INVOCATION
     gridRegen();
 })
 
+//FUNCTION GRID RESIZE
 function gridRegen() {
-
+    //RETURNS THE INDEX OF A SELECTED OPTIONS IN MY DROPDOWN LIST
     const value = dropdown.options[dropdown.selectedIndex].value;
     console.log(value);
+    //IF THE VALUE SELECTED FROM THE OPTIONS LIST....
+    //IF VALUE = EASY
     if (value === "easy") {
         gridGenerator(10, 10)
+        //ELSE IF VALUE = MEDIUM
     } else if (value === "medium") {
         gridGenerator(9, 9);
     } else {
+        //ELSE VALUE IS = HARD
         gridGenerator(7, 7);
     }
     return value;

@@ -20,7 +20,7 @@ Facciamo in modo di generare 16 numeri casuali (tutti diversi) compresi tra 1 e 
 Generiamoli e stampiamo in console per essere certi che siano corretti
 
 
-# MILESTONE 3
+////# MILESTONE 3
 Quando l'utente clicca su una cella, verifichiamo se ha calpestato una bomba, controllando se il numero di cella è presente nell'array di bombe. Se si, la cella diventa rossa (raccogliamo il punteggio e e scriviamo in console che la partita termina) altrimenti diventa azzurra e dobbiamo incrementare il punteggio.
 
 //// 1- seleziono una cella,
@@ -45,7 +45,7 @@ Quando l'utente clicca su una cella, e questa non è una bomba, dobbiamo control
 
 
 
-# MILESTONE 5
+////# MILESTONE 5
 Quando la partita termina dobbiamo capire se è terminata perchè è stata cliccata una bomba o se perchè l'utente ha raggiunto il punteggio massimo. Dobbiamo poi stampare in pagina il punteggio raggiunto ed il messaggio adeguato in caso di vittoria o sconfitta.*/
 
 
@@ -64,6 +64,7 @@ let userResult = 0;
 const rows = 10;
 const cells = 10;
 const totalCells = rows * cells;
+
 //FUNZIONE CREAZIONE CELLA
 function createCell() {
     const bombImg = document.createElement('img');
@@ -94,15 +95,11 @@ function createCell() {
         }
 
     })
-
     return cella;
 };
+
 // lista di numeri estratti
 let arrayNumber = [];
-
-
-//
-
 
 function randomGenerator(max) {
     for (let i = 0; i < 16; i++) {
@@ -126,15 +123,7 @@ function randomGenerator(max) {
 
 randomGenerator(100);
 
-
-
-
-
-
-
 //RECUPERO ELEMENTI DAL DOM
-
-
 
 // MOSTRO IN PAGINA LA GRIGLIA TRAMITE UN EVENT LISTNER AL BUTTON
 button.addEventListener('click', () => {
